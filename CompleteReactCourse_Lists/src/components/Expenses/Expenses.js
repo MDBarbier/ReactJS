@@ -7,9 +7,7 @@ import React, {useState} from 'react';
 const Expenses = (props) => {
 
   const [filteredYear, setFilteredYear] = useState('2021');
-
-  const filteredArray = props.data.filter(checkItemAgainstFilter)
-
+  const filteredArray = props.data.filter(checkItemAgainstFilter); 
   const expenseitemmap = filteredArray.map((item) => (
     <ExpenseItem
       key={item.id}
@@ -18,15 +16,16 @@ const Expenses = (props) => {
       date={item.date}
     />
   ));
-
   const filterUpdatedHandler = (newFilter) => {
     setFilteredYear(newFilter);
   };
+  let noExpensesContent = <p>No items found.</p>
 
   return (
     <div>
       <Card className="expenses">
-        <ExpensesFilter onUpdateFilter={filterUpdatedHandler} filterYear={filteredYear} />,
+        <ExpensesFilter onUpdateFilter={filterUpdatedHandler} filterYear={filteredYear} />
+        {expenseitemmap.length === 0 && noExpensesContent}
         {expenseitemmap}
       </Card>
     </div>
