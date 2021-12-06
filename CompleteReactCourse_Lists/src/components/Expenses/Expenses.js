@@ -1,34 +1,22 @@
 import "./Expenses.css";
-import ExpenseItem from "./ExpenseItem";
 import Card from "../UI/Card";
 import ExpensesFilter from "./ExpensesFilter";
 import React, {useState} from 'react';
+import ExpensesList from "./ExpensesList";
 
 const Expenses = (props) => {
 
   const [filteredYear, setFilteredYear] = useState('2021');
-  const filteredArray = props.data.filter(checkItemAgainstFilter); 
-  const expenseitemmap = filteredArray.map((item) => (
-    <ExpenseItem
-      key={item.id}
-      title={item.title}
-      amount={item.amount}
-      date={item.date}
-    />
-  ));
-  const filterUpdatedHandler = (newFilter) => {
-    setFilteredYear(newFilter);
-  };
-  let noExpensesContent = <p>No items found.</p>
+  const filteredArray = props.data.filter(checkItemAgainstFilter);
+  const filterUpdatedHandler = (newFilter) => setFilteredYear(newFilter); 
 
   return (
-    <div>
+    <li>
       <Card className="expenses">
         <ExpensesFilter onUpdateFilter={filterUpdatedHandler} filterYear={filteredYear} />
-        {expenseitemmap.length === 0 && noExpensesContent}
-        {expenseitemmap}
+        <ExpensesList data={filteredArray}></ExpensesList>      
       </Card>
-    </div>
+    </li>
   );
 
   function checkItemAgainstFilter(item) {    
